@@ -19,7 +19,7 @@ public class ClanCommand extends Command {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof ProxiedPlayer){
             ProxiedPlayer proxiedPlayer = (ProxiedPlayer) sender;
-            if (ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()).toString() != "0"){
+            if (!ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()).toString().equals("0")){
                 if (args.length >= 1){
                     if (args[0].equals("list")){
                         proxiedPlayer.sendMessage((BaseComponent) ClanManager.getAllClanMemberNames(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())));
