@@ -1,0 +1,4 @@
+name: ClanSysteme
+version: ${project.version}
+main: de.karottenboy33.clansysteme.ClanSysteme
+
