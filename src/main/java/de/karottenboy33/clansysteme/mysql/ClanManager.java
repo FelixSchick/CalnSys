@@ -2,7 +2,6 @@ package de.karottenboy33.clansysteme.mysql;
 
 
 import de.karottenboy33.clansysteme.utils.BungeeNameFetcher;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -109,6 +108,14 @@ public class ClanManager {
                 }
 
             });
+        } else if (ClanId == "0")  {
+              ResultSet set = MySQL.getInstance().executeQuery("UPDATE `clanuser` SET `clanid`=? WHERE uuid=?", new HashMap<Integer, String>(){
+                  {
+                      put(1, String.valueOf(ClanId));
+                      put(2, String.valueOf(uuid));
+                  }
+
+              });
         }
     }
 
@@ -146,17 +153,15 @@ public class ClanManager {
             return null;
         }
     }
-    public static List< UUID > getAllClanMemberUUI(String ClanID){
+    /*public static String getAllClanMemberUUI(String ClanID){
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clanuser` WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
-                put(1, ClanID.toString());
+                put(1, ClanID);
             }
         });
         try {
             while (set.next()){
-                List<UUID> uuids = new ArrayList<>();
-                uuids.add(UUID.fromString(set.getString("uuid")));
-                return uuids;
+                return set.getString("uuid");
             }
             return null;
         } catch (SQLException e){
@@ -165,13 +170,13 @@ public class ClanManager {
         }
     }
     public static List< String > getAllClanMemberNames(String ClanID){
-        List< UUID > uuids = getAllClanMemberUUI(ClanID);
-        if (uuids.size() != 0){
+        String uuids = getAllClanMemberUUI(ClanID);
+        if (uuids != 0){
             List<String> names = Collections.singletonList(BungeeNameFetcher.getName(String.valueOf(uuids)));
             return names;
         }
         return null;
-    }
+    }*/
     public static void setClanName(String ClanID, String name){
 
         ResultSet set = MySQL.getInstance().executeQuery("UPDATE `clan` SET `name`=? WHERE `clanid`=?", new HashMap<Integer, String>(){
