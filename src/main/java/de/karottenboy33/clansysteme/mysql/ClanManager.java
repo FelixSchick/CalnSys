@@ -56,7 +56,7 @@ public class ClanManager {
         new Random().nextBytes(array);
         String generatedString = new String(array);
         if (!IsClanExist(generatedString)){
-            ResultSet set = MySQL.getInstance().executeQuery("INSERT INTO `clan` (`clanid`, `name`,`tag`, `ownerid`, `vizeid`, `size`, `ispublic `) VALUES (?,?,?)", new HashMap<Integer, String>(){
+            ResultSet set = MySQL.getInstance().executeQuery("INSERT INTO `clan` (`clanid`, `name`, `tag`, `ownerid`, `vizeid`, `size`, `ispublic`) VALUES (?,?,?,?,?,?,?)", new HashMap<Integer, String>(){
                 {
                     put(1, String.valueOf(generatedString));
                     put(2, ClanName);
@@ -64,7 +64,7 @@ public class ClanManager {
                     put(4, String.valueOf(ownerid));
                     put(5, String.valueOf(0));
                     put(6, String.valueOf(size));
-                    put(7, String.valueOf(false));
+                    put(7, String.valueOf(0));
                 }
             });
             setPlayerClanID(ownerid, generatedString);
@@ -209,7 +209,7 @@ public class ClanManager {
             return 0;
         }
     }
-    public static Boolean getClanIsPublic(String ClanID){
+    public static int getClanIsPublic(String ClanID){
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clan` WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
                 put(1, ClanID.toString());
@@ -217,12 +217,28 @@ public class ClanManager {
         });
         try {
             while (set.next()){
-                return set.getBoolean("ispublic");
+                return set.getInt("ispublic");
             }
-            return false;
+            return 0;
         } catch (SQLException e){
             e.getErrorCode();
-            return false;
+            return 0;
+        }
+    }
+    public static String getClanID(String ClanName){
+        ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clan` WHERE `name`=?", new HashMap<Integer, String>(){
+            {
+                put(1, ClanName.toString());
+            }
+        });
+        try {
+            while (set.next()){
+                return set.getString("clanid");
+            }
+            return null;
+        } catch (SQLException e){
+            e.getErrorCode();
+            return null;
         }
     }
 
@@ -300,7 +316,7 @@ public class ClanManager {
             }
         });
     }
-    public static void setClanIsPublic(String ClanID, Boolean ispublic){
+    public static void setClanIsPublic(String ClanID, int ispublic){
 
         ResultSet set = MySQL.getInstance().executeQuery("UPDATE `clan` SET `ispublic`=? WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
