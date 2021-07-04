@@ -27,7 +27,7 @@ public class ClanCommand extends Command {
     public void execute(CommandSender sender, String[] args) {
         if (sender instanceof ProxiedPlayer){
             ProxiedPlayer proxiedPlayer = (ProxiedPlayer) sender;
-            if (!ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()).toString().equals("0")){
+            if (!ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()).equals("0")){
                 if (args.length >= 1){
                     /*if (args[0].equals("list")){
                         proxiedPlayer.sendMessage((BaseComponent) ClanManager.getAllClanMemberNames(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())));
@@ -92,19 +92,32 @@ public class ClanCommand extends Command {
                     proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du bist im clan: ");
                 }
             } else {
-                if (args[0].equals("accept")){
-                    if (clanrequest.containsKey(proxiedPlayer.getUniqueId())){
-                        String clanid = clanrequest.get(proxiedPlayer.getUniqueId());
-                        ClanManager.setPlayerClanID(proxiedPlayer.getUniqueId(), clanid);
-                        clanrequest.remove(proxiedPlayer.getUniqueId(), clanid);
-                    } else {
-                        proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast keine Einladung erhalten☹");
+                if (args.length >= 1){
+                    if (args[0].equals("accept")){
+                        if (clanrequest.containsKey(proxiedPlayer.getUniqueId())){
+                            String clanid = clanrequest.get(proxiedPlayer.getUniqueId());
+                            ClanManager.setPlayerClanID(proxiedPlayer.getUniqueId(), clanid);
+                            clanrequest.remove(proxiedPlayer.getUniqueId(), clanid);
+                        } else {
+                            proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast keine Einladung erhalten☹");
+                        }
                     }
-                }
-                if (args.length == 2){
+                    if (args[0].equals("join")){
+                        if (args.length == 2){
+                            String clanid = args[1];
+                            if (ClanManager.getClanIsPublic(clanid)){
+
+                            }
+                        }
+                    }
+
                     if (args[0].equals("create")){
-                        ClanManager.createClan(args[1], proxiedPlayer.getUniqueId());
-                        proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan: "+ ChatColor.of("#0398fc") + args[1] + ChatColor.of("#fcba03") + " erstellt.");
+                        if (args.length >= 3){
+                            ClanManager.createClan(args[1], args[2], proxiedPlayer.getUniqueId(), 25);
+                            proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan: "+ ChatColor.of("#0398fc") + args[1] + ChatColor.of("#fcba03") + " erstellt.");
+                        } else {
+                            proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " /clan create <Name> <Tag>");
+                        }
                     }
                 }
             }
