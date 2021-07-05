@@ -103,8 +103,11 @@ public class ClanCommand extends Command {
                         //proxiedPlayer.sendMessage((BaseComponent) ClanManager.getAllClanMemberNames(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())));
                     }
                 } else {
-                    //proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du bist im clan: " +ClanManager.getClanName(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())));
-                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du bist im clan: ");
+                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du kannst folgende befehle nutzen: ");
+                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#0398fc") + "/clan Stats "+ ChatColor.of("#fcba03") + "» Nutze diesen um die Stats deines Clan anzusehen.");
+                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#0398fc") + "/clan leave "+ ChatColor.of("#fcba03") + "» Nutze diesen um den Clan zu verlassen.");
+                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#0398fc") + "/clan invite "+ ChatColor.of("#fcba03") + "» Nutze diesen um neue leute einzuladen.");
+                    //proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du bist im clan: ");
                 }
             } else {
                 if (args.length >= 1){
@@ -153,6 +156,12 @@ public class ClanCommand extends Command {
                             proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " /clan create <Name> <Tag>");
                         }
                     }
+                } else {
+                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du kannst folgende befehle nutzen: ");
+                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#0398fc") + "/clan create "+ ChatColor.of("#fcba03") + "» Nutze diesen um einen Clan zu erstellen.");
+                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#0398fc") + "/clan join "+ ChatColor.of("#fcba03") + "» Nutze diesen um einen public clan zu joinen.");
+                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#0398fc") + "/clan accept "+ ChatColor.of("#fcba03") + "» Nutze diesen um eine Einladungs anfrage anzunehmen.");
+                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#0398fc") + "/clan deny "+ ChatColor.of("#fcba03") + "» Nutze diesen um eine Einladungs anfrage abzulehnen.");
                 }
             }
         }

@@ -11,7 +11,6 @@ import net.md_5.bungee.event.EventHandler;
 public class ProxiedPlayerJoinEvent extends Event implements Listener {
     @EventHandler
     public void onJoin(PostLoginEvent event){
-        event.getPlayer().sendMessage("test");
         ClanManager.createUser(event.getPlayer().getUniqueId());
     }
 }
