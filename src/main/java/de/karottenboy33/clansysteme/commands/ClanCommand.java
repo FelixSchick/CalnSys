@@ -46,7 +46,7 @@ public class ClanCommand extends Command {
                             if (proxiedPlayer.getUniqueId().toString().equals(ClanManager.getClanOwner(Objects.requireNonNull(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()))))){
                                 ProxiedPlayer proxiedTarget = ProxyServer.getInstance().getPlayer(args[1]);
                                 if (proxiedTarget != null){
-                                    ClanManager.setClanVizeID(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()), proxiedTarget.getUniqueId());
+                                    ClanManager.setClanVizeID(Objects.requireNonNull(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())), proxiedTarget.getUniqueId());
                                     proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Du hast den Clan Member "+ proxiedTarget.getName() + " befördert.");
                                 } else {
                                     proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Der Spieler ist nicht online.");
