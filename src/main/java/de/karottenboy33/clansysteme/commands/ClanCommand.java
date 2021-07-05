@@ -33,9 +33,19 @@ public class ClanCommand extends Command {
                         proxiedPlayer.sendMessage((BaseComponent) ClanManager.getAllClanMemberNames(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())));
                     }*/
                     if (args[0].equals("Stats")){
-                        String ownername = ProxyServer.getInstance().getPlayer(ClanManager.getClanOwner(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()))).getDisplayName();
-                        proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Name: "+ ClanManager.getClanName(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())));
-                        proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Owner: "+ ownername);
+                        String ownernameid = ClanManager.getClanOwner(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()));
+                        String ownername = ProxyServer.getInstance().getPlayer(ownernameid).getDisplayName();
+                        String vizeid = ClanManager.getClanVizeID(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()));
+                        String vizename = ProxyServer.getInstance().getPlayer(vizeid).getDisplayName();
+                        if (!ownername.equals(" ") && !vizename.equals(" ")){
+                            proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Name: "+ ClanManager.getClanName(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())));
+                            proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Owner: "+ ownername);
+                            proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Vize: "+ vizename);
+                        } else {
+                            proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Name: "+ ClanManager.getClanName(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())));
+                        }
+
+
                     }
                     if (args[0].equals("leave")) {
                         proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du bist dem Clan " + ClanManager.getClanName(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())) + " verlassen.");
