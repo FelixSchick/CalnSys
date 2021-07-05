@@ -89,6 +89,16 @@ public class ClanManager {
         }
     }
 
+    public static void deleteClan(String Clanid) {
+        if(IsClanExist(Clanid)) {
+            ResultSet set = MySQL.getInstance().executeQuery("DELETE FROM `clan` WHERE`clanid`=?", new HashMap<Integer, String>(){
+                {
+                    put(1, String.valueOf(Clanid));
+                }
+            });
+        }
+    }
+
     //Backend Player
     public static String getPlayerClanID(UUID uuid){
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clanuser` WHERE uuid=?", new HashMap<Integer, String>(){

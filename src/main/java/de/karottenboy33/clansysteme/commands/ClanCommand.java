@@ -53,6 +53,9 @@ public class ClanCommand extends Command {
                         proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du bist dem Clan " + ClanManager.getClanName(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())) + " verlassen.");
                         ClanManager.setPlayerClanID(proxiedPlayer.getUniqueId(), "0");
                         ClanManager.setClanMember(clanid, ClanManager.getClanMember(clanid) - 1);
+                        if (ClanManager.getClanMember(clanid) == 0 || (ClanManager.getClanOwner(clanid).equals(String.valueOf(proxiedPlayer.getUniqueId())))){
+                            ClanManager.deleteClan(clanid);
+                        }
                     }
                     if (args[0].equalsIgnoreCase("vize")) {
                         if (args.length == 2){
@@ -116,6 +119,15 @@ public class ClanCommand extends Command {
                             }
                         }
                         //proxiedPlayer.sendMessage((BaseComponent) ClanManager.getAllClanMemberNames(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())));
+                    }
+                    if (args[0].equalsIgnoreCase("delete")) {
+                        String clanid = ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId());
+                        if ((ClanManager.getClanOwner(clanid).equals(String.valueOf(proxiedPlayer.getUniqueId())))){
+                            ClanManager.deleteClan(clanid);
+                            proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan " + ClanManager.getClanName(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())) + " gelöcht.");
+                        } else {
+                            proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du bist nicht der Besitzer dieses Clans.");
+                        }
                     }
                 } else {
                     proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du kannst folgende befehle nutzen: ");
