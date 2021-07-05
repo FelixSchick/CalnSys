@@ -172,6 +172,8 @@ public class ClanCommand extends Command {
                     if (args[0].equalsIgnoreCase("create")){
                         if (args.length >= 3){
                             ClanManager.createClan(args[1], args[2], proxiedPlayer.getUniqueId(), 25);
+                            String clanid = ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId());
+                            ClanManager.setClanMember(clanid, ClanManager.getClanMember(clanid) + 1);
                             proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan: "+ ChatColor.of("#0398fc") + args[1] + ChatColor.of("#fcba03") + " erstellt.");
                         } else {
                             proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " /clan create <Name> <Tag>");
