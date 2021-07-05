@@ -81,7 +81,7 @@ public class MySQLCreate {
     public static void createsClanTable() {
         try {
             Statement statement = con.createStatement();
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS clan (clanid TEXT, name TEXT, tag TEXT, ownerid TEXT, vizeid TEXT, size INT, ispublic BOOLEAN)");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS clan (clanid TEXT, name TEXT, tag TEXT, ownerid TEXT, vizeid TEXT, size INT,member INT, ispublic INT)");
             statement.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

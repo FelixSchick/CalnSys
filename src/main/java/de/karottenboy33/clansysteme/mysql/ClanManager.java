@@ -225,6 +225,23 @@ public class ClanManager {
             return 0;
         }
     }
+    public static int getClanMember(String ClanID){
+        ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clan` WHERE `clanid`=?", new HashMap<Integer, String>(){
+            {
+                put(1, ClanID.toString());
+            }
+        });
+        try {
+            while (set.next()){
+                return set.getInt("member");
+            }
+            return 0;
+        } catch (SQLException e){
+            e.getErrorCode();
+            return 0;
+        }
+    }
+
     public static String getClanID(String ClanName){
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clan` WHERE `name`=?", new HashMap<Integer, String>(){
             {
@@ -291,6 +308,16 @@ public class ClanManager {
         ResultSet set = MySQL.getInstance().executeQuery("UPDATE `clan` SET `tag`=? WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
                 put(1, String.valueOf(ClanTag));
+                put(2, ClanID.toString());
+
+            }
+        });
+    }
+    public static void setClanMember(String ClanID, int member){
+
+        ResultSet set = MySQL.getInstance().executeQuery("UPDATE `clan` SET `member`=? WHERE `clanid`=?", new HashMap<Integer, String>(){
+            {
+                put(1, String.valueOf(member));
                 put(2, ClanID.toString());
 
             }

@@ -1,5 +1,6 @@
 package de.karottenboy33.clansysteme;
 
+import de.karottenboy33.clansysteme.commands.ClanAdminCommand;
 import de.karottenboy33.clansysteme.commands.ClanCommand;
 import de.karottenboy33.clansysteme.events.ProxiedPlayerJoinEvent;
 import de.karottenboy33.clansysteme.mysql.MySQL;
@@ -50,6 +51,7 @@ public final class ClanSysteme extends Plugin {
         MySQLCreate.createsClanTable();
         MySQLCreate.createsUserTable();
         getProxy().getPluginManager().registerCommand(this, new ClanCommand());
+        getProxy().getPluginManager().registerCommand(this, new ClanAdminCommand());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new ProxiedPlayerJoinEvent());
     }
 
