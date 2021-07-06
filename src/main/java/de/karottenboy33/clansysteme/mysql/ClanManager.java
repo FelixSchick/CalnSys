@@ -116,6 +116,22 @@ public class ClanManager {
             return null;
         }
     }
+    public static String getAllClanMembers(String clanid){
+        ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clanuser` WHERE clanid=?", new HashMap<Integer, String>(){
+            {
+                put(1, clanid);
+            }
+        });
+        try {
+            while (set.next()){
+                return set.getString("uuid");
+            }
+            return null;
+        } catch (SQLException e){
+            e.getErrorCode();
+            return null;
+        }
+    }
 
     public static void setPlayerClanID(UUID uuid, String ClanId){
         if (IsClanExist(ClanId)){
