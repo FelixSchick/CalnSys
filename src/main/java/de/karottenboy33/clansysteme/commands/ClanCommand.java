@@ -76,8 +76,12 @@ public class ClanCommand extends Command {
                                 UUID clanid = UUID.fromString(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()));
                                 if (proxiedTarget != null){
                                     if (!ClanManager.getClanVizeID(clanid).equals(proxiedTarget.getUniqueId())){
-                                        ClanManager.setClanVizeID(UUID.fromString((ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()))), proxiedTarget.getUniqueId());
-                                        proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Du hast den Clan Member "+ proxiedTarget.getName() + " befördert.");
+                                        if (ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()).equals(ClanManager.getPlayerClanID(proxiedTarget.getUniqueId()))){
+                                            ClanManager.setClanVizeID(UUID.fromString((ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()))), proxiedTarget.getUniqueId());
+                                            proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Du hast den Clan Member "+ proxiedTarget.getName() + " befördert.");
+                                        }else {
+                                            proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Der Spieler ist nicht in deinem Clan.");
+                                        }
                                     } else {
                                         proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Der Spieler ist bereits Vize.");
                                     }
@@ -96,8 +100,13 @@ public class ClanCommand extends Command {
                                 UUID clanid = UUID.fromString(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()));
                                 if (proxiedTarget != null){
                                     if (ClanManager.getClanVizeID(clanid).equals(proxiedTarget.getUniqueId())){
-                                        ClanManager.setClanVizeID(UUID.fromString((ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()))), UUID.fromString("0"));
-                                        proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Du hast den Clan Member "+ proxiedTarget.getName() + " herabgestuft.");
+                                        if (ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()).equals(ClanManager.getPlayerClanID(proxiedTarget.getUniqueId()))){
+                                            ClanManager.setClanVizeID(UUID.fromString((ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()))), UUID.fromString("0"));
+                                            proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Du hast den Clan Member "+ proxiedTarget.getName() + " herabgestuft.");
+                                        }else {
+                                            proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Der Spieler ist nicht in deinem Clan.");
+                                        }
+
                                     } else {
                                         proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Der Spieler ist kein vize.");
                                     }
