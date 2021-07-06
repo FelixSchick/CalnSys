@@ -7,6 +7,8 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
+import java.util.UUID;
+
 public class ClanAdminCommand extends Command {
     public ClanAdminCommand() {
         super("clanadmin", "", "ca");
@@ -21,14 +23,14 @@ public class ClanAdminCommand extends Command {
                     if (args[0].equalsIgnoreCase("setPublic")) {
                         if (args.length == 2 ){
                             String clanName = args[1];
-                            String clanid = ClanManager.getClanID(clanName);
-                            if (ClanManager.IsClanExist(clanid)){
-                                if (ClanManager.getClanIsPublic(clanid) == 1){
-                                    ClanManager.setClanIsPublic(clanid, 0);
-                                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan " + ClanManager.getClanName(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())) + " nicht Public gesetzt.");
+                            String clanid = String.valueOf(ClanManager.getClanID(clanName));
+                            if (ClanManager.IsClanExist(UUID.fromString(clanid))){
+                                if (ClanManager.getClanIsPublic(UUID.fromString(clanid)) == 1){
+                                    ClanManager.setClanIsPublic(UUID.fromString(clanid), 0);
+                                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan " + ClanManager.getClanName(UUID.fromString(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()))) + " nicht Public gesetzt.");
                                 }else {
-                                    ClanManager.setClanIsPublic(clanid, 1);
-                                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan " + ClanManager.getClanName(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())) + " Public gesetzt.");
+                                    ClanManager.setClanIsPublic(UUID.fromString(clanid), 1);
+                                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan " + ClanManager.getClanName(UUID.fromString(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()))) + " Public gesetzt.");
                                 }
                             }
                         }
@@ -37,11 +39,11 @@ public class ClanAdminCommand extends Command {
                     if (args[0].equalsIgnoreCase("setSize")) {
                         if (args.length == 3) {
                             String clanName = args[1];
-                            String clanid = ClanManager.getClanID(clanName);
+                            UUID clanid = ClanManager.getClanID(clanName);
                             int clansize = Integer.parseInt(args[2]);
                             if (ClanManager.IsClanExist(clanid)){
                                 ClanManager.setClanSize(clanid, clansize);
-                                proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan " + ClanManager.getClanName(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())) + " auf die Clan größe "+clansize+" gesetzt.");
+                                proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan " + ClanManager.getClanName(UUID.fromString(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()))) + " auf die Clan größe "+clansize+" gesetzt.");
                             }
                         }
                     }

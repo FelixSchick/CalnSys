@@ -1,8 +1,6 @@
 package de.karottenboy33.clansysteme.mysql;
 
 
-import de.karottenboy33.clansysteme.utils.BungeeNameFetcher;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
@@ -24,7 +22,7 @@ public class ClanManager {
             return false;
         }
     }
-    public static boolean IsClanExist(String ClanID) {
+    public static boolean IsClanExist(UUID ClanID) {
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clan` WHERE `clanid` = ?", new HashMap<Integer, String>(){
             {
                 put(1, String.valueOf(ClanID));
@@ -52,13 +50,11 @@ public class ClanManager {
         }
     }
     public static void createClan(String ClanName,String ClanTag, UUID ownerid, int size) {
-        byte[] array = new byte[20];
-        new Random().nextBytes(array);
-        String generatedString = new String(array);
-        if (!IsClanExist(generatedString)){
+       UUID clanid = UUID.randomUUID();
+        if (!IsClanExist(clanid)){
             ResultSet set = MySQL.getInstance().executeQuery("INSERT INTO `clan` (`clanid`, `name`, `tag`, `ownerid`, `vizeid`, `size`, `ispublic`) VALUES (?,?,?,?,?,?,?)", new HashMap<Integer, String>(){
                 {
-                    put(1, String.valueOf(generatedString));
+                    put(1, String.valueOf(clanid));
                     put(2, ClanName);
                     put(3, ClanTag);
                     put(4, String.valueOf(ownerid));
@@ -67,15 +63,13 @@ public class ClanManager {
                     put(7, String.valueOf(0));
                 }
             });
-            setPlayerClanID(ownerid, generatedString);
+            setPlayerClanID(ownerid, clanid);
         } else {
-            byte[] array2 = new byte[20];
-            new Random().nextBytes(array2);
-            String generatedString2 = new String(array2);
-            if (!IsClanExist(generatedString2)){
+            UUID clanid2 = UUID.randomUUID();
+            if (!IsClanExist(clanid)){
                 ResultSet set = MySQL.getInstance().executeQuery("INSERT INTO `clan` (`clanid`, `name`,`tag`, `ownerid`, `vizeid`, `size`, `ispublic`) VALUES (?,?,?)", new HashMap<Integer, String>(){
                     {
-                        put(1, String.valueOf(generatedString2));
+                        put(1, String.valueOf(clanid2));
                         put(2, ClanName);
                         put(3, ClanTag);
                         put(4, String.valueOf(ownerid));
@@ -84,12 +78,12 @@ public class ClanManager {
                         put(7, String.valueOf(false));
                     }
                 });
-                setPlayerClanID(ownerid, generatedString2);  
+                setPlayerClanID(ownerid,clanid2);
             }
         }
     }
 
-    public static void deleteClan(String Clanid) {
+    public static void deleteClan(UUID Clanid) {
         if(IsClanExist(Clanid)) {
             ResultSet set = MySQL.getInstance().executeQuery("DELETE FROM `clan` WHERE `clanid`=?", new HashMap<Integer, String>(){
                 {
@@ -116,10 +110,10 @@ public class ClanManager {
             return null;
         }
     }
-    public static String getAllClanMembers(String clanid){
+    public static String getAllClanMembers(UUID clanid){
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clanuser` WHERE clanid=?", new HashMap<Integer, String>(){
             {
-                put(1, clanid);
+                put(1, String.valueOf(clanid));
             }
         });
         try {
@@ -133,7 +127,7 @@ public class ClanManager {
         }
     }
 
-    public static void setPlayerClanID(UUID uuid, String ClanId){
+    public static void setPlayerClanID(UUID uuid, UUID ClanId){
         if (IsClanExist(ClanId)){
             ResultSet set = MySQL.getInstance().executeQuery("UPDATE `clanuser` SET `clanid`=? WHERE uuid=?", new HashMap<Integer, String>(){
                 {
@@ -142,7 +136,7 @@ public class ClanManager {
                 }
 
             });
-        } else if (ClanId == "0")  {
+        } else if (ClanId.equals("0"))  {
               ResultSet set = MySQL.getInstance().executeQuery("UPDATE `clanuser` SET `clanid`=? WHERE uuid=?", new HashMap<Integer, String>(){
                   {
                       put(1, String.valueOf(ClanId));
@@ -155,7 +149,7 @@ public class ClanManager {
 
 
     //Backend Clan
-    public static String getClanName(String ClanID){
+    public static String getClanName(UUID ClanID){
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clan` WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
                 put(1, ClanID.toString());
@@ -171,7 +165,7 @@ public class ClanManager {
             return null;
         }
     }
-    public static String getClanOwner(String ClanID){
+    public static String getClanOwner(UUID ClanID){
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clan` WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
                 put(1, ClanID.toString());
@@ -187,7 +181,7 @@ public class ClanManager {
             return null;
         }
     }
-    public static String getClanTag(String ClanID){
+    public static String getClanTag(UUID ClanID){
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clan` WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
                 put(1, ClanID.toString());
@@ -203,7 +197,7 @@ public class ClanManager {
             return null;
         }
     }
-    public static String getClanVizeID(String ClanID){
+    public static String getClanVizeID(UUID ClanID){
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clan` WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
                 put(1, ClanID.toString());
@@ -219,7 +213,7 @@ public class ClanManager {
             return null;
         }
     }
-    public static int getClanSize(String ClanID){
+    public static int getClanSize(UUID ClanID){
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clan` WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
                 put(1, ClanID.toString());
@@ -235,7 +229,7 @@ public class ClanManager {
             return 0;
         }
     }
-    public static int getClanIsPublic(String ClanID){
+    public static int getClanIsPublic(UUID ClanID){
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clan` WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
                 put(1, ClanID.toString());
@@ -251,7 +245,7 @@ public class ClanManager {
             return 0;
         }
     }
-    public static int getClanMember(String ClanID){
+    public static int getClanMember(UUID ClanID){
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clan` WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
                 put(1, ClanID.toString());
@@ -268,7 +262,7 @@ public class ClanManager {
         }
     }
 
-    public static String getClanID(String ClanName){
+    public static UUID getClanID(String ClanName){
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clan` WHERE `name`=?", new HashMap<Integer, String>(){
             {
                 put(1, ClanName.toString());
@@ -276,7 +270,7 @@ public class ClanManager {
         });
         try {
             while (set.next()){
-                return set.getString("clanid");
+                return UUID.fromString(set.getString("clanid"));
             }
             return null;
         } catch (SQLException e){
@@ -309,7 +303,7 @@ public class ClanManager {
         }
         return null;
     }*/
-    public static void setClanName(String ClanID, String name){
+    public static void setClanName(UUID ClanID, String name){
 
         ResultSet set = MySQL.getInstance().executeQuery("UPDATE `clan` SET `name`=? WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
@@ -319,7 +313,7 @@ public class ClanManager {
             }
         });
     }
-    public static void setClanOwner(String ClanID, UUID ownerid){
+    public static void setClanOwner(UUID ClanID, UUID ownerid){
 
         ResultSet set = MySQL.getInstance().executeQuery("UPDATE `clan` SET `ownerid`=? WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
@@ -329,7 +323,7 @@ public class ClanManager {
             }
         });
     }
-    public static void setClanTag(String ClanID, String ClanTag){
+    public static void setClanTag(UUID ClanID, String ClanTag){
 
         ResultSet set = MySQL.getInstance().executeQuery("UPDATE `clan` SET `tag`=? WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
@@ -339,7 +333,7 @@ public class ClanManager {
             }
         });
     }
-    public static void setClanMember(String ClanID, int member){
+    public static void setClanMember(UUID ClanID, int member){
 
         ResultSet set = MySQL.getInstance().executeQuery("UPDATE `clan` SET `member`=? WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
@@ -349,7 +343,7 @@ public class ClanManager {
             }
         });
     }
-    public static void setClanVizeID(String ClanID, UUID vizeid){
+    public static void setClanVizeID(UUID ClanID, UUID vizeid){
 
         ResultSet set = MySQL.getInstance().executeQuery("UPDATE `clan` SET `vizeid`=? WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
@@ -359,7 +353,7 @@ public class ClanManager {
             }
         });
     }
-    public static void setClanSize(String ClanID, int Size){
+    public static void setClanSize(UUID ClanID, int Size){
 
         ResultSet set = MySQL.getInstance().executeQuery("UPDATE `clan` SET `size`=? WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
@@ -369,7 +363,7 @@ public class ClanManager {
             }
         });
     }
-    public static void setClanIsPublic(String ClanID, int ispublic){
+    public static void setClanIsPublic(UUID ClanID, int ispublic){
 
         ResultSet set = MySQL.getInstance().executeQuery("UPDATE `clan` SET `ispublic`=? WHERE `clanid`=?", new HashMap<Integer, String>(){
             {
