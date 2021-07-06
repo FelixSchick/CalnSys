@@ -53,7 +53,7 @@ public class ClanCommand extends Command {
                         proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du bist dem Clan " + ClanManager.getClanName(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())) + " verlassen.");
                         ClanManager.setPlayerClanID(proxiedPlayer.getUniqueId(), "0");
                         ClanManager.setClanMember(clanid, ClanManager.getClanMember(clanid) - 1);
-                        if ((ClanManager.getClanOwner(clanid).equals(String.valueOf(proxiedPlayer.getUniqueId())))){
+                        if (((ClanManager.getClanOwner(clanid).equals(String.valueOf(proxiedPlayer.getUniqueId()))))){
                             ClanManager.setPlayerClanID(proxiedPlayer.getUniqueId(), "0");
                             for (int i=0; i <= ClanManager.getClanMember(clanid); i++){
                                 String clanmember =ClanManager.getAllClanMembers(clanid);
