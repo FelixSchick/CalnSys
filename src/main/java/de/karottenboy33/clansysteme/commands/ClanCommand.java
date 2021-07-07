@@ -83,7 +83,7 @@ public class ClanCommand extends Command {
                                             proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Der Spieler ist nicht in deinem Clan.");
                                         }
                                     } else {
-                                        proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Der Spieler ist bereits Vize.");
+                                        proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Der Spieler ist bereits Vize-Leader.");
                                     }
                                 } else {
                                     proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Der Spieler ist nicht online.");
@@ -108,7 +108,7 @@ public class ClanCommand extends Command {
                                         }
 
                                     } else {
-                                        proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Der Spieler ist kein vize.");
+                                        proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Der Spieler ist kein Vize-Leader.");
                                     }
                                 } else {
                                     proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Der Spieler ist nicht online.");
@@ -141,9 +141,9 @@ public class ClanCommand extends Command {
                             if (proxiedTarget != null){
                                 if (ClanManager.getPlayerClanID(proxiedTarget.getUniqueId()).equalsIgnoreCase("0")){
                                     TextComponent txt = new TextComponent();
-                                    txt.setText(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du Wurdest in den Clan "+ ClanManager.getClanName(UUID.fromString(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()))) + " eingeladen.");
+                                    txt.setText(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du wurdest in den Clan "+ ClanManager.getClanName(UUID.fromString(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()))) + " eingeladen.");
 
-                                    TextComponent selectAccept = new TextComponent(ClanSysteme.prefix + ChatColor.of("#fcba03") + "§7[§2Anehmen§7] ");
+                                    TextComponent selectAccept = new TextComponent(ClanSysteme.prefix + ChatColor.of("#fcba03") + "§7[§2Annehmenn§7] ");
                                     selectAccept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/clan accept"));
                                     selectAccept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("§2aceptieren")));
 
@@ -159,6 +159,7 @@ public class ClanCommand extends Command {
                                     message.addExtra(selectDeny);
                                     proxiedTarget.sendMessage(message);
                                     clanrequest.put(proxiedTarget.getUniqueId(), ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()));
+                                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Du hast den Spieler "+ ChatColor.of("#fcba03") +proxiedTarget.getDisplayName()+ChatColor.of("#fcba03") +" eingeladen.");
                                 } else {
                                     proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + "Der Spieler ist bereits in einem Clan.");
                                 }
