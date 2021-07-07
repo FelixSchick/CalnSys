@@ -27,10 +27,10 @@ public class ClanAdminCommand extends Command {
                             if (ClanManager.IsClanExist(UUID.fromString(clanid))){
                                 if (ClanManager.getClanIsPublic(UUID.fromString(clanid)) == 1){
                                     ClanManager.setClanIsPublic(UUID.fromString(clanid), 0);
-                                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan " + ClanManager.getClanName(UUID.fromString(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()))) + " nicht Public gesetzt.");
+                                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan " + ClanManager.getClanName(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())) + " nicht Public gesetzt.");
                                 }else {
                                     ClanManager.setClanIsPublic(UUID.fromString(clanid), 1);
-                                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan " + ClanManager.getClanName(UUID.fromString(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()))) + " Public gesetzt.");
+                                    proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan " + ClanManager.getClanName(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())) + " Public gesetzt.");
                                 }
                             }
                         }
@@ -43,7 +43,7 @@ public class ClanAdminCommand extends Command {
                             int clansize = Integer.parseInt(args[2]);
                             if (ClanManager.IsClanExist(clanid)){
                                 ClanManager.setClanSize(clanid, clansize);
-                                proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan " + ClanManager.getClanName(UUID.fromString(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId()))) + " auf die Clan größe "+clansize+" gesetzt.");
+                                proxiedPlayer.sendMessage(ClanSysteme.prefix + ChatColor.of("#fcba03") + " Du hast den Clan " + ClanManager.getClanName(ClanManager.getPlayerClanID(proxiedPlayer.getUniqueId())) + " auf die Clan größe "+clansize+" gesetzt.");
                             }
                         }
                     }

@@ -44,7 +44,7 @@ public class ClanManager {
             ResultSet set = MySQL.getInstance().executeQuery("INSERT INTO `clanuser` (`uuid`, `clanid`) VALUES (?,?)", new HashMap<Integer, String>(){
                 {
                     put(1, String.valueOf(uuid));
-                    put(2, String.valueOf(0));
+                    put(2, String.valueOf(UUID.fromString("00000000-0000-0000-0000-000000000000")));
                 }
             });
         }
@@ -94,7 +94,7 @@ public class ClanManager {
     }
 
     //Backend Player
-    public static String getPlayerClanID(UUID uuid){
+    public static UUID getPlayerClanID(UUID uuid){
         ResultSet set = MySQL.getInstance().executeQuery("SELECT * FROM `clanuser` WHERE uuid=?", new HashMap<Integer, String>(){
             {
                 put(1, uuid.toString());
@@ -102,7 +102,7 @@ public class ClanManager {
         });
         try {
             while (set.next()){
-                return set.getString("clanid");
+                return UUID.fromString(set.getString("clanid"));
             }
             return null;
         } catch (SQLException e){
